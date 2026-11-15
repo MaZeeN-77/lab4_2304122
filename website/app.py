@@ -22,6 +22,10 @@ def render_library(author_form=None, author_errors=None, book_form=None, book_er
         cursor = conn.cursor()
         cursor.execute("SELECT author_id, name, country FROM AUTHOR ORDER BY author_id")
         authors = cursor.fetchall()
+        cursor.execute("SELECT publisher_id, name FROM PUBLISHER ORDER BY name")
+        publishers = cursor.fetchall()
+        cursor.execute("SELECT category_id, name FROM CATEGORY ORDER BY name")
+        categories = cursor.fetchall()
         cursor.execute("SELECT book_id, title, price, author_id FROM BOOK ORDER BY book_id")
         books = cursor.fetchall()
     finally:
@@ -30,6 +34,8 @@ def render_library(author_form=None, author_errors=None, book_form=None, book_er
     return render_template(
         "library.html",
         authors=authors,
+        publishers=publishers,
+        categories=categories,
         books=books,
         author_form=author_form or {},
         author_errors=author_errors or {},
@@ -79,9 +85,14 @@ def add_author():
 def add_book():
     title = request.form.get("title", "").strip()
     price = request.form.get("price", "").strip()
+    year = request.form.get("publish_year", "").strip()
     author_id = request.form.get("author_id", "").strip()
+    publisher_id = request.form.get("publisher_id", "").strip()
+    category_id = request.form.get("category_id", "").strip()
 
-    form = {"title": title, "price": price, "author_id": author_id}
+    form = {"title": title, "price": price, "publish_year": year,
+            "author_id": author_id, "publisher_id": publisher_id,
+            "category_id": category_id}
     errors = {}
 
     if not title:
@@ -98,8 +109,17 @@ def add_book():
         except ValueError:
             errors["price"] = "Price must be a number"
 
+    if not year:
+        errors["publish_year"] = "Year is required"
+    elif not year.isdigit():
+        errors["publish_year"] = "Year must be a number"
+
     if not author_id:
         errors["author_id"] = "Author is required"
+    if not publisher_id:
+        errors["publisher_id"] = "Publisher is required"
+    if not category_id:
+        errors["category_id"] = "Category is required"
 
     if errors:
         return render_library(book_form=form, book_errors=errors)
@@ -108,8 +128,9 @@ def add_book():
     try:
         cursor = conn.cursor()
         cursor.execute(
-            "INSERT INTO BOOK (title, price, author_id) VALUES (?, ?, ?)",
-            (title, price, int(author_id)),
+            "INSERT INTO BOOK (title, price, publish_year, author_id, publisher_id, category_id) "
+            "VALUES (?, ?, ?, ?, ?, ?)",
+            (title, price, int(year), int(author_id), int(publisher_id), int(category_id)),
         )
         conn.commit()
     finally:

@@ -56,6 +56,10 @@
         <input type="text" id="book-price" name="price" value="{{ book_form.price or '' }}">
         <div class="error">{{ book_errors.price or '' }}</div>
 
+        <label for="book-year">Publish year</label>
+        <input type="text" id="book-year" name="publish_year" value="{{ book_form.publish_year or '' }}">
+        <div class="error">{{ book_errors.publish_year or '' }}</div>
+
         <label for="book-author">Author</label>
         <select id="book-author" name="author_id">
             <option value="">-- Select author --</option>
@@ -64,6 +68,24 @@
             {% endfor %}
         </select>
         <div class="error">{{ book_errors.author_id or '' }}</div>
+
+        <label for="book-publisher">Publisher</label>
+        <select id="book-publisher" name="publisher_id">
+            <option value="">-- Select publisher --</option>
+            {% for p in publishers %}
+            <option value="{{ p.publisher_id }}" {% if book_form.publisher_id == p.publisher_id|string %}selected{% endif %}>{{ p.name }}</option>
+            {% endfor %}
+        </select>
+        <div class="error">{{ book_errors.publisher_id or '' }}</div>
+
+        <label for="book-category">Category</label>
+        <select id="book-category" name="category_id">
+            <option value="">-- Select category --</option>
+            {% for c in categories %}
+            <option value="{{ c.category_id }}" {% if book_form.category_id == c.category_id|string %}selected{% endif %}>{{ c.name }}</option>
+            {% endfor %}
+        </select>
+        <div class="error">{{ book_errors.category_id or '' }}</div>
 
         <button type="submit">Add book</button>
     </form>
