@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Authors and books{% endblock %}
+
+{% block content %}
+<div class="card wide">
+    <div class="topbar">
+        <h1>Authors and books</h1>
+        <div class="user">
+            <a class="btn-small" href="/library">Library</a>
+        </div>
+    </div>
+
+    <h2>Number of books per author</h2>
+    <table>
+        <tr><th>Author</th><th>Books</th></tr>
+        {% for r in author_counts %}
+        <tr><td>{{ r.author }}</td><td>{{ r.books }}</td></tr>
+        {% endfor %}
+    </table>
+
+    <h2>Books whose author and publisher are from the same country</h2>
+    {% if same_country %}
+    <table>
+        <tr><th>Book</th><th>Author</th><th>Publisher</th><th>Country</th></tr>
+        {% for r in same_country %}
+        <tr>
+            <td>{{ r.title }}</td>
+            <td>{{ r.author }}</td>
+            <td>{{ r.publisher }}</td>
+            <td>{{ r.country }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p class="empty">No book matches.</p>
+    {% endif %}
+</div>
+{% endblock %}

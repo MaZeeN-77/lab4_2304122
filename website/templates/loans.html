@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Loans{% endblock %}
+
+{% block content %}
+<div class="card wide">
+    <div class="topbar">
+        <h1>Loans</h1>
+        <div class="user">
+            <a class="btn-small" href="/library">Library</a>
+        </div>
+    </div>
+
+    <h2>Loans not returned yet</h2>
+    {% if not_returned %}
+    <table>
+        <tr><th>Loan</th><th>Book</th><th>Member</th><th>Loan date</th></tr>
+        {% for r in not_returned %}
+        <tr>
+            <td>{{ r.loan_id }}</td>
+            <td>{{ r.title }}</td>
+            <td>{{ r.member }}</td>
+            <td>{{ r.loan_date }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p class="empty">All loans have been returned.</p>
+    {% endif %}
+
+    <h2>Members who never borrowed a book</h2>
+    {% if no_loan_members %}
+    <table>
+        <tr><th>ID</th><th>Name</th></tr>
+        {% for r in no_loan_members %}
+        <tr><td>{{ r.member_id }}</td><td>{{ r.name }}</td></tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p class="empty">Every member has borrowed at least one book.</p>
+    {% endif %}
+
+    <h2>Books that were never borrowed</h2>
+    {% if never_borrowed %}
+    <table>
+        <tr><th>ID</th><th>Title</th></tr>
+        {% for r in never_borrowed %}
+        <tr><td>{{ r.book_id }}</td><td>{{ r.title }}</td></tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p class="empty">Every book has been borrowed.</p>
+    {% endif %}
+</div>
+{% endblock %}

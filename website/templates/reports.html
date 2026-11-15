@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Reports{% endblock %}
+
+{% block content %}
+<div class="card wide">
+    <div class="topbar">
+        <h1>Reports</h1>
+        <div class="user">
+            <a class="btn-small" href="/library">Library</a>
+        </div>
+    </div>
+
+    <h2>Books and average price per category</h2>
+    <table>
+        <tr><th>Category</th><th>Books</th><th>Average price</th></tr>
+        {% for r in by_category %}
+        <tr>
+            <td>{{ r.category }}</td>
+            <td>{{ r.books }}</td>
+            <td>{{ '%.2f'|format(r.avg_price) }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Authors with at least 2 books</h2>
+    {% if prolific %}
+    <table>
+        <tr><th>Author</th><th>Books</th></tr>
+        {% for r in prolific %}
+        <tr><td>{{ r.author }}</td><td>{{ r.books }}</td></tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p class="empty">No author has 2 or more books.</p>
+    {% endif %}
+
+    <h2>Whole library</h2>
+    <table>
+        <tr><th>Total price</th><th>Smallest price</th><th>Largest price</th></tr>
+        <tr>
+            <td>{{ totals.total_price }}</td>
+            <td>{{ totals.min_price }}</td>
+            <td>{{ totals.max_price }}</td>
+        </tr>
+    </table>
+</div>
+{% endblock %}

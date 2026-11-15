@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Most borrowed{% endblock %}
+
+{% block content %}
+<div class="card wide">
+    <div class="topbar">
+        <h1>Most borrowed</h1>
+        <div class="user">
+            <a class="btn-small" href="/library">Library</a>
+        </div>
+    </div>
+
+    <h2>Top 3 books</h2>
+    {% if top_books %}
+    <table>
+        <tr><th>Book</th><th>Loans</th></tr>
+        {% for r in top_books %}
+        <tr><td>{{ r.title }}</td><td>{{ r.loans }}</td></tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p class="empty">No loans yet.</p>
+    {% endif %}
+
+    <h2>Member with the most loans</h2>
+    {% if top_member %}
+    <table>
+        <tr><th>Member</th><th>Loans</th></tr>
+        <tr><td>{{ top_member.member }}</td><td>{{ top_member.loans }}</td></tr>
+    </table>
+    {% else %}
+    <p class="empty">No loans yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

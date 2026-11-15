@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Search books{% endblock %}
+
+{% block content %}
+<div class="card wide">
+    <div class="topbar">
+        <h1>Search books</h1>
+        <div class="user">
+            <a class="btn-small" href="/library">Library</a>
+        </div>
+    </div>
+
+    <form method="GET" action="/library/search" novalidate>
+        <input type="hidden" name="searched" value="1">
+
+        <label for="s-title">Title contains</label>
+        <input type="text" id="s-title" name="title" value="{{ form.title }}">
+
+        <label for="s-min">Minimum price</label>
+        <input type="text" id="s-min" name="min_price" value="{{ form.min_price }}">
+        <div class="error">{{ errors.min_price or '' }}</div>
+
+        <label for="s-max">Maximum price</label>
+        <input type="text" id="s-max" name="max_price" value="{{ form.max_price }}">
+        <div class="error">{{ errors.max_price or '' }}</div>
+
+        <label for="s-cat">Category</label>
+        <select id="s-cat" name="category_id">
+            <option value="">-- All categories --</option>
+            {% for c in categories %}
+            <option value="{{ c.category_id }}" {% if form.category_id == c.category_id|string %}selected{% endif %}>{{ c.name }}</option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">Search</button>
+    </form>
+
+    {% if searched and not errors %}
+        {% if books %}
+        <table>
+            <tr><th>ID</th><th>Title</th><th>Price</th><th>Category</th></tr>
+            {% for b in books %}
+            <tr>
+                <td>{{ b.book_id }}</td>
+                <td>{{ b.title }}</td>
+                <td>{{ b.price }}</td>
+                <td>{{ b.category }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+        <p class="empty">No books match your search.</p>
+        {% endif %}
+    {% endif %}
+</div>
+{% endblock %}
