@@ -1,6 +1,9 @@
 # Lab 4: Library Database and Website
 
-Introduction to Database Systems, Alexandria National University, Fall 2026
+Introduction to Database Systems, Alexandria National University
+
+Student: Mazen Ibrahim
+
 Student ID: 2304122
 
 Problem 2 only (Library). Database: Microsoft SQL Server. Website: Python Flask with pyodbc.
@@ -27,15 +30,13 @@ Problem 2 only (Library). Database: Microsoft SQL Server. Website: Python Flask 
 
 A navigation bar at the top of every page links to all of them.
 
-| Page | URL | SQL features |
-|---|---|---|
-| Library (Lab 3: add, edit, delete books and authors) | `/library` | INSERT, UPDATE, DELETE |
-| F2.1 Search books | `/library/search` | LIKE, BETWEEN, ORDER BY |
-| F2.2 Catalogue | `/library/catalogue` | JOIN of 4 tables |
-| F2.3 Reports | `/library/reports` | GROUP BY, HAVING, aggregates |
-| F2.4 Loans | `/library/loans` | JOIN, LEFT JOIN |
-| F2.5 Most borrowed | `/library/most-borrowed` | GROUP BY, ORDER BY, TOP |
-| F2.6 Authors and books | `/library/authors-books` | LEFT JOIN, JOIN |
+- Library (`/library`): add, edit and delete books and authors (Lab 3 page).
+- F2.1 Search books (`/library/search`): LIKE, BETWEEN, ORDER BY.
+- F2.2 Catalogue (`/library/catalogue`): JOIN of 4 tables.
+- F2.3 Reports (`/library/reports`): GROUP BY, HAVING, aggregate functions.
+- F2.4 Loans (`/library/loans`): JOIN, LEFT JOIN.
+- F2.5 Most borrowed (`/library/most-borrowed`): GROUP BY, ORDER BY, TOP.
+- F2.6 Authors and books (`/library/authors-books`): LEFT JOIN, JOIN.
 
 ## Notes
 
